@@ -2,8 +2,8 @@
 
 ## Members  
 Areeba Rahu  
-Aashi Uday Savla
-Vedant Srinivasan
+Aashi Uday Savla  
+Vedant Srinivasan  
 Nicholas Bottomley  
 
 ## Study  
