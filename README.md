@@ -2,7 +2,7 @@
 
 ## Members  
 Areeba Rahu  
-Aashi Uday Savla  
+Aashi Savla  
 Vedant Srinivasan  
 Nicholas Bottomley  
 
