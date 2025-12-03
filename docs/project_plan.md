@@ -281,7 +281,7 @@ Set up the R environment for the whole project: install required packages and in
 
 ---
 
-### 8.2 `01_download_and_prepare_data.R`
+### 8.2 `02_download_data.R`
 
 #### Purpose (plain English)
 Download breast cancer datasets from GEO and turn them into clean expression + sample annotation tables.
@@ -317,7 +317,7 @@ For each dataset, for example:
 
 ---
 
-### 8.3 `02_run_deg_per_dataset.R`
+### 8.3 `03_deg_analysis.R`
 
 #### Purpose (plain English)
 For each dataset, find genes that are significantly up- or down-regulated in cancer vs normal.
@@ -356,7 +356,7 @@ Optional combined file:
 
 ---
 
-### 8.4 `03_integrate_deg_across_datasets.R`
+### 8.4 `04_integration.R`
 
 #### Purpose (plain English)
 Combine DEG results from multiple datasets to identify robust genes that are consistently up- or down-regulated.
@@ -390,7 +390,7 @@ Optional:
 
 ---
 
-### 8.5 `04_run_enrichment.R`
+### 8.5 `05_enrichment.R`
 
 #### Purpose (plain English)
 Run GO and pathway enrichment on the robust DEG lists to identify key biological processes and pathways.
@@ -430,7 +430,7 @@ Run GO and pathway enrichment on the robust DEG lists to identify key biological
 
 ---
 
-### 8.6 `05_prepare_ppi_gene_lists.R`
+### 8.6 `05_prepare_gene_list.R`
 
 #### Purpose (plain English)
 Prepare clean gene lists from robust DEGs for upload to STRING / Cytoscape for PPI network analysis.
@@ -465,7 +465,7 @@ Optional:
 
 ---
 
-### 8.7 `06_run_survival_analysis.R` (if using TCGA BRCA)
+### 8.7 `07_survival.R` (if using TCGA BRCA)
 
 #### Purpose (plain English)
 Test whether expression of selected genes is associated with patient survival.
