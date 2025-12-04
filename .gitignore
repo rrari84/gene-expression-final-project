@@ -1,2 +1,21 @@
-/data/raw/GSE*
-local_junk
+# === Raw & processed data ===
+data/raw/
+data/processed/
+
+# Results (figures, DE tables, etc.)
+results/
+
+# === Conda environments ===
+conda_envs/
+
+# === R / RStudio cruft ===
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# === Just in case, large array files ===
+*.CEL
+*.CEL.gz
+*.fastq
+*.fastq.gz
