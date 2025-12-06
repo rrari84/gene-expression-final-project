@@ -141,10 +141,10 @@ deg_analysis <- function(gse_id, expr_file, pheno_file, out_dir) {
       message("[info] Using column '", col_nm, "' for group (tumor vs nontumor)")
       print(table(vals))
 
-      pheno$group <- ifelse(
-        grepl("tumor", vals, ignore.case = TRUE),
-        "cancer",
-        "normal"
+      pheno$group <- dplyr::case_when(
+        grepl("^non[- ]?tumor$", vals, ignore.case = TRUE) ~ "normal",
+        grepl("tumor", vals, ignore.case = TRUE) ~ "cancer",
+        TRUE ~ "other"
       )
 
     } else if (gse_id == "GSE65194" && "sample_group:ch1" %in% cols) {
@@ -154,10 +154,8 @@ deg_analysis <- function(gse_id, expr_file, pheno_file, out_dir) {
       print(table(vals))
 
       pheno$group <- dplyr::case_when(
-        grepl("normal",  vals, ignore.case = TRUE) ~ "normal",
-        grepl("control", vals, ignore.case = TRUE) ~ "normal",
-        grepl("tumor|tumour|cancer|carcinoma", vals, ignore.case = TRUE) ~ "cancer",
-        TRUE ~ "other"
+        grepl("healthy", vals, ignore.case = TRUE) ~ "normal",
+        TRUE ~ "cancer"
       )
 
     } else if (gse_id == "GSE42568" && "tissue:ch1" %in% cols) {
