@@ -117,12 +117,69 @@ deg_analysis <- function(gse_id, expr_file, pheno_file, out_dir) {
   expr_mat <- expr_mat[, expr_pheno_matches, drop = FALSE]
   pheno    <- pheno[expr_pheno_matches, , drop = FALSE]
 
+  # ---- 5a. Ensure pheno$group exists (dataset-specific mapping) ----
   if (!"group" %in% colnames(pheno)) {
-    stop(sprintf(
-      "'group' column not found in phenotype data for %s.\nAvailable columns: %s",
-      gse_id,
-      paste(colnames(pheno), collapse = ", ")
-    ))
+    message("[info] 'group' column not found; attempting to derive it.")
+    cols <- colnames(pheno)
+    message("[info] Available columns: ", paste(cols, collapse = ", "))
+
+    if (gse_id == "GSE26910" && "normal/tumor:ch1" %in% cols) {
+      col_nm <- "normal/tumor:ch1"
+      vals <- pheno[[col_nm]]
+      message("[info] Using column '", col_nm, "' for group (normal vs tumor)")
+      print(table(vals))
+
+      pheno$group <- ifelse(
+        grepl("tumor", vals, ignore.case = TRUE),
+        "cancer",
+        "normal"
+      )
+
+    } else if (gse_id == "GSE54002" && "tumor/nontumor:ch1" %in% cols) {
+      col_nm <- "tumor/nontumor:ch1"
+      vals <- pheno[[col_nm]]
+      message("[info] Using column '", col_nm, "' for group (tumor vs nontumor)")
+      print(table(vals))
+
+      pheno$group <- ifelse(
+        grepl("tumor", vals, ignore.case = TRUE),
+        "cancer",
+        "normal"
+      )
+
+    } else if (gse_id == "GSE65194" && "sample_group:ch1" %in% cols) {
+      col_nm <- "sample_group:ch1"
+      vals <- pheno[[col_nm]]
+      message("[info] Using column '", col_nm, "' for group from sample_group:ch1")
+      print(table(vals))
+
+      pheno$group <- dplyr::case_when(
+        grepl("normal",  vals, ignore.case = TRUE) ~ "normal",
+        grepl("control", vals, ignore.case = TRUE) ~ "normal",
+        grepl("tumor|tumour|cancer|carcinoma", vals, ignore.case = TRUE) ~ "cancer",
+        TRUE ~ "other"
+      )
+
+    } else if (gse_id == "GSE42568" && "tissue:ch1" %in% cols) {
+      col_nm <- "tissue:ch1"
+      vals <- pheno[[col_nm]]
+      message("[info] Using column '", col_nm, "' for group (tumor vs normal tissue)")
+      print(table(vals))
+
+      pheno$group <- dplyr::case_when(
+        grepl("normal",  vals, ignore.case = TRUE) ~ "normal",
+        grepl("control", vals, ignore.case = TRUE) ~ "normal",
+        grepl("tumor|tumour|cancer|carcinoma", vals, ignore.case = TRUE) ~ "cancer",
+        TRUE ~ "other"
+      )
+
+    } else {
+      stop(sprintf(
+        "'group' column not found and no mapping implemented for %s.\nAvailable columns: %s",
+        gse_id,
+        paste(cols, collapse = ", ")
+      ))
+    }
   }
 
   # Check group distribution
@@ -218,6 +275,7 @@ deg_analysis <- function(gse_id, expr_file, pheno_file, out_dir) {
 
   invisible(results_cleaned)
 }
+
 
 # ---- 6. Apply analysis to all datasets ----
 
