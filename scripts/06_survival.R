@@ -63,8 +63,9 @@ if (file.exists(expr_rds) && file.exists(clin_rds)) {
     project       = "TCGA-BRCA",
     data.category = "Transcriptome Profiling",
     data.type     = "Gene Expression Quantification",
-    workflow.type = "HTSeq - FPKM"
+    workflow.type = "STAR - Counts"
   )
+
 
   GDCdownload(query.exp)
   exp_data <- GDCprepare(query.exp)
