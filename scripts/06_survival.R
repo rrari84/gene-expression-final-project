@@ -67,8 +67,12 @@ if (file.exists(expr_rds) && file.exists(clin_rds)) {
   )
 
 
-  GDCdownload(query.exp)
-  exp_data <- GDCprepare(query.exp)
+  # Make sure the download directory exists
+  dir.create("GDCdata", showWarnings = FALSE, recursive = TRUE)
+
+  GDCdownload(query.exp, directory = "GDCdata")
+  exp_data <- GDCprepare(query.exp, directory = "GDCdata")
+
 
   message("[step] Downloading TCGA BRCA clinical data ...")
   clinical <- GDCquery_clinic(project = "TCGA-BRCA", type = "clinical")
