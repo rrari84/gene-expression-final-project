@@ -1,5 +1,4 @@
 #!/usr/bin/env Rscript
-
 # 06_survival.R
 # -----------------------------------
 # Survival analysis for hub genes using TCGA BRCA expression + clinical data.
@@ -13,7 +12,7 @@
 #   results/survival/survival_<GENE>.png
 #
 # Usage:
-#   Rscript scripts/06_survival.R
+#  Rscript scripts/06_survival.R
 
 message("=== 06_survival.R: Starting Survival Analysis ===")
 
